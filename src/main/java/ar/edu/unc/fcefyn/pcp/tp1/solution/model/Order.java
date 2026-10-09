@@ -25,6 +25,8 @@ public class Order {
         return state;
     }
 
+    public synchronized Printer getPrinter(){ return printer; }
+
     public synchronized void assign(Printer printer){
         if (this.printer != null) {
             throw new IllegalStateException(
