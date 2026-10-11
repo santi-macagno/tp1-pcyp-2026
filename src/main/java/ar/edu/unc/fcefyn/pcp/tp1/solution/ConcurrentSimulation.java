@@ -61,37 +61,37 @@ public final class ConcurrentSimulation implements Simulation {
         printer.reserve(order.getId());
         delay(config.assignmentDelayMillis());
         order.assign(printer);
-        order.setAssignmentCount();
-        log.changed(order, Stage.ASSIGNMENT, OrderState.CREATED, OrderState.WAITING_VALIDATION);
+        order.countAssignment();
+        log.recordTransition(order, Stage.ASSIGNMENT, OrderState.CREATED, OrderState.WAITING_VALIDATION);
 
         // Etapa 2: validacion
         delay(config.validationDelayMillis());
-        order.setValidationCount();
+        order.countValidation();
         if (!OutcomeDecider.isModelValid(order.getId(), config)) {
-            log.changed(order, Stage.VALIDATION, OrderState.WAITING_VALIDATION, OrderState.REJECTED);
+            log.recordTransition(order, Stage.VALIDATION, OrderState.WAITING_VALIDATION, OrderState.REJECTED);
             printer.release();
             return;
         }
-        log.changed(order, Stage.VALIDATION, OrderState.WAITING_VALIDATION, OrderState.READY_TO_PRINT);
+        log.recordTransition(order, Stage.VALIDATION, OrderState.WAITING_VALIDATION, OrderState.READY_TO_PRINT);
 
         // Etapa 3: impresion
         delay(config.printingDelayMillis());
-        order.setPrintingCount();
+        order.countPrinting();
         if (!OutcomeDecider.isPrintSuccessful(order.getId(), config)) {
-            log.changed(order, Stage.PRINTING, OrderState.READY_TO_PRINT, OrderState.PRINT_FAILED);
+            log.recordTransition(order, Stage.PRINTING, OrderState.READY_TO_PRINT, OrderState.PRINT_FAILED);
             printer.disable();
             return;
         }
-        log.changed(order, Stage.PRINTING, OrderState.READY_TO_PRINT, OrderState.PRINTED);
+        log.recordTransition(order, Stage.PRINTING, OrderState.READY_TO_PRINT, OrderState.PRINTED);
         printer.release();
 
         // Etapa 4: control de calidad
         delay(config.qualityControlDelayMillis());
-        order.setQualityControlCount();
+        order.countQualityControl();
         OrderState result = OutcomeDecider.isQualityApproved(order.getId(), config)
                 ? OrderState.APPROVED
                 : OrderState.DEFECTIVE;
-        log.changed(order, Stage.QUALITY_CONTROL, OrderState.PRINTED, result);
+        log.recordTransition(order, Stage.QUALITY_CONTROL, OrderState.PRINTED, result);
     }
 
     private List<Printer> createPrinters(SimulationConfig config) {

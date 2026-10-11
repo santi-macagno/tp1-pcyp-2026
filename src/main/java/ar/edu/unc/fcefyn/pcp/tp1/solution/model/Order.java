@@ -44,19 +44,19 @@ public class Order {
         state = to;
     }
 
-    public synchronized void setAssignmentCount(){
+    public synchronized void countAssignment(){
         assignmentCount ++;
     }
 
-    public synchronized void setValidationCount(){
+    public synchronized void countValidation(){
         validationCount ++;
     }
 
-    public synchronized void setPrintingCount(){
+    public synchronized void countPrinting(){
         printingCount ++;
     }
 
-    public synchronized void setQualityControlCount(){
+    public synchronized void countQualityControl(){
         qualityControlCount ++;
     }
 
