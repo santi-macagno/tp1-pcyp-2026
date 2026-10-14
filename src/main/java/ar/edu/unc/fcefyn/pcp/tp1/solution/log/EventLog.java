@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EventLog {
+public class EventLog extends Order {
 
     private final long startNanos;
     private final List<String> lines = new ArrayList<>();
