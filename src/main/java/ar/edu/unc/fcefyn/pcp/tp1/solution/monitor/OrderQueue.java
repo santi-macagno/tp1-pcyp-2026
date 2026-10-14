@@ -2,14 +2,14 @@ package ar.edu.unc.fcefyn.pcp.tp1.solution.monitor;
 
 import ar.edu.unc.fcefyn.pcp.tp1.solution.model.Order;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.ArrayList;
+import java.util.List;
 
 // Cola entre etapas (monitor propio). Todos los accesos a "orders" y "closed"
 // se hacen con el lock de esta instancia tomado.
 public class OrderQueue {
 
-    private final Deque<Order> orders = new ArrayDeque<>();
+    private final List<Order> orders = new ArrayList<>();
     private boolean closed;
 
     public synchronized void put(Order order) {
@@ -26,7 +26,10 @@ public class OrderQueue {
         while (orders.isEmpty() && !closed) {
             wait();
         }
-        return orders.pollFirst();
+        if(orders.isEmpty()) {
+            return null; // Si esta cerrada y vacía
+        }
+        return orders.removeFirst();
     }
 
     // Se llama cuando ya terminaron todos los productores de esta cola.

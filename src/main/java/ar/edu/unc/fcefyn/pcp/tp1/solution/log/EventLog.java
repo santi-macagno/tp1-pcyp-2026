@@ -14,7 +14,7 @@ public class EventLog {
     private final List<String> lines = new ArrayList<>();
     private long sequence;
 
-    public EventLog(long startNanos) {
+    public EventLog (long startNanos) {
         this.startNanos = startNanos;
     }
 
