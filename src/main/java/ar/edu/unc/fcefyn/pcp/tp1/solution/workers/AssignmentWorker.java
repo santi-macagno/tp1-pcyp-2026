@@ -9,13 +9,13 @@ import ar.edu.unc.fcefyn.pcp.tp1.solution.model.Stage;
 import ar.edu.unc.fcefyn.pcp.tp1.solution.monitor.OrderQueue;
 import ar.edu.unc.fcefyn.pcp.tp1.solution.monitor.PrinterFarm;
 
-public class assignmentWorker extends stageWorkers{
+public class AssignmentWorker extends StageWorker {
 
     private final OrderQueue output;
     private final PrinterFarm farm;
     private final EventLog log;
 
-    public assignmentWorker(OrderQueue input, OrderQueue output, PrinterFarm farm,
+    public AssignmentWorker(OrderQueue input, OrderQueue output, PrinterFarm farm,
                             EventLog log, SimulationConfig config) {
         super(input, config.assignmentDelayMillis());
         this.output = output;

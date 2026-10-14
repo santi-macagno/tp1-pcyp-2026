@@ -11,10 +11,10 @@ import ar.edu.unc.fcefyn.pcp.tp1.solution.model.Order;
 import ar.edu.unc.fcefyn.pcp.tp1.solution.monitor.OrderQueue;
 import ar.edu.unc.fcefyn.pcp.tp1.solution.monitor.PrinterFarm;
 import ar.edu.unc.fcefyn.pcp.tp1.solution.output.ResultWriter;
-import ar.edu.unc.fcefyn.pcp.tp1.solution.workers.assignmentWorker;
-import ar.edu.unc.fcefyn.pcp.tp1.solution.workers.printingWorker;
-import ar.edu.unc.fcefyn.pcp.tp1.solution.workers.qualityControlWorker;
-import ar.edu.unc.fcefyn.pcp.tp1.solution.workers.validationWorker;
+import ar.edu.unc.fcefyn.pcp.tp1.solution.workers.AssignmentWorker;
+import ar.edu.unc.fcefyn.pcp.tp1.solution.workers.PrintingWorker;
+import ar.edu.unc.fcefyn.pcp.tp1.solution.workers.QualityControlWorker;
+import ar.edu.unc.fcefyn.pcp.tp1.solution.workers.ValidationWorker;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -47,13 +47,13 @@ public final class ConcurrentSimulation implements Simulation {
         assignmentQueue.close();
 
         List<Thread> assignment = startThreads("assignment", config.assignmentThreads(),
-                () -> new assignmentWorker(assignmentQueue, validationQueue, farm, log, config));
+                () -> new AssignmentWorker(assignmentQueue, validationQueue, farm, log, config));
         List<Thread> validation = startThreads("validation", config.validationThreads(),
-                () -> new validationWorker(validationQueue, printingQueue, farm, log, config));
+                () -> new ValidationWorker(validationQueue, printingQueue, farm, log, config));
         List<Thread> printing = startThreads("printing", config.printingThreads(),
-                () -> new printingWorker(printingQueue, qualityQueue, farm, log, config));
+                () -> new PrintingWorker(printingQueue, qualityQueue, farm, log, config));
         List<Thread> quality = startThreads("quality-control", config.qualityControlThreads(),
-                () -> new qualityControlWorker(qualityQueue, log, config));
+                () -> new QualityControlWorker(qualityQueue, log, config));
 
         joinAll(assignment);
         validationQueue.close();
