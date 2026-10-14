@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EventLog extends Order {
+public class EventLog {
 
     private final long startNanos;
     private final List<String> lines = new ArrayList<>();
     private long sequence;
 
-    public EventLog(long startNanos) {
+    public EventLog (long startNanos) {
         this.startNanos = startNanos;
     }
 
