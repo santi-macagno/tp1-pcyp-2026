@@ -9,12 +9,12 @@ import ar.edu.unc.fcefyn.pcp.tp1.solution.model.Stage;
 import ar.edu.unc.fcefyn.pcp.tp1.solution.monitor.OrderQueue;
 
 
-public class qualityControlWorker extends stageWorkers {
+public class QualityControlWorker extends StageWorker {
 
     private final EventLog log;
     private final SimulationConfig config;
 
-    public qualityControlWorker(OrderQueue input, EventLog log, SimulationConfig config) {
+    public QualityControlWorker(OrderQueue input, EventLog log, SimulationConfig config) {
         super(input, config.qualityControlDelayMillis());
         this.log = log;
         this.config = config;
