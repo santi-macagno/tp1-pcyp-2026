@@ -22,9 +22,9 @@ public class EventLog {
         append(order, Stage.INITIALIZATION, "ORDER_CREATED", null, OrderState.CREATED, null);
     }
 
-    public synchronized void changed(Order order, Stage stage, OrderState from, OrderState to) {
+    public void changed(Order order, Stage stage, OrderState from, OrderState to) {
         order.transition(from, to);
-        append(order, stage, "ORDER_STATE_CHANGED", from, to, order.toSnapshot().assignedPrinterId());
+        synchronized (this) {append(order, stage, "ORDER_STATE_CHANGED", from, to, order.toSnapshot().assignedPrinterId());};
     }
 
     public synchronized List<String> lines() {
