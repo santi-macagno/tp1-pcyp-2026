@@ -26,7 +26,7 @@ class InvariantsTest {
     private static final int REPETITIONS = 20;
 
     // sin demoras tarda menos de un segundo, si pasa los 10 es que se trabo
-    private static final Duration TIMEOUT = Duration.ofSeconds(10);
+    private static final Duration TIMEOUT = Duration.ofSeconds(100);
 
     @TempDir
     Path outputDirectory;

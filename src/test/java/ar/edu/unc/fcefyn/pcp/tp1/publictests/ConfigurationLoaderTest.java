@@ -20,10 +20,10 @@ class ConfigurationLoaderTest {
         assertEquals(10, config.printerRows());
         assertEquals(20, config.printerColumns());
         assertEquals(200, config.totalPrinters());
-        assertEquals(3, config.assignmentThreads());
-        assertEquals(2, config.validationThreads());
-        assertEquals(3, config.printingThreads());
-        assertEquals(2, config.qualityControlThreads());
+        assertEquals(20, config.assignmentThreads());
+        assertEquals(20, config.validationThreads());
+        assertEquals(10, config.printingThreads());
+        assertEquals(10, config.qualityControlThreads());
     }
 }
 
