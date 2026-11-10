@@ -30,9 +30,11 @@ public class ValidationWorker extends StageWorker {
         order.setValidationCount();
 
         if (OutcomeDecider.isModelValid(order.getId(), config)) {
+            order.transition(OrderState.WAITING_VALIDATION, OrderState.READY_TO_PRINT);
             log.changed(order, Stage.VALIDATION, OrderState.WAITING_VALIDATION, OrderState.READY_TO_PRINT);
             output.put(order);
         } else {
+            order.transition(OrderState.WAITING_VALIDATION, OrderState.REJECTED);
             log.changed(order, Stage.VALIDATION, OrderState.WAITING_VALIDATION, OrderState.REJECTED);
             farm.release(order.getPrinter());
         }

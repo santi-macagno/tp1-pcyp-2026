@@ -31,10 +31,12 @@ public class PrintingWorker extends StageWorker {
         order.setPrintingCount();
 
         if (OutcomeDecider.isPrintSuccessful(order.getId(), config)) {
+            order.transition(OrderState.READY_TO_PRINT, OrderState.PRINTED);
             log.changed(order, Stage.PRINTING, OrderState.READY_TO_PRINT, OrderState.PRINTED);
             farm.release(order.getPrinter());
             output.put(order);
         } else {
+            order.transition(OrderState.READY_TO_PRINT, OrderState.PRINT_FAILED);
             log.changed(order, Stage.PRINTING, OrderState.READY_TO_PRINT, OrderState.PRINT_FAILED);
             farm.disable(order.getPrinter());
         }
