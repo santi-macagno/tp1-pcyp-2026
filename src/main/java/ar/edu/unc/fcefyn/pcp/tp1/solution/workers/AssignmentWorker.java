@@ -29,6 +29,7 @@ public class AssignmentWorker extends StageWorker {
         order.assign(printer);
         delay();
         order.setAssignmentCount();
+        order.transition(OrderState.CREATED, OrderState.WAITING_VALIDATION);
         log.changed(order, Stage.ASSIGNMENT, OrderState.CREATED, OrderState.WAITING_VALIDATION);
         output.put(order);
     }

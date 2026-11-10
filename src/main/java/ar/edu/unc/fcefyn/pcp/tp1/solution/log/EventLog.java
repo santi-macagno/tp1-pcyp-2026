@@ -23,8 +23,10 @@ public class EventLog {
     }
 
     public void changed(Order order, Stage stage, OrderState from, OrderState to) {
-        order.transition(from, to);
-        synchronized (this) {append(order, stage, "ORDER_STATE_CHANGED", from, to, order.toSnapshot().assignedPrinterId());};
+        String printerId = order.getPrinter().getId();
+        synchronized (this) {
+            append(order, stage, "ORDER_STATE_CHANGED", from, to, printerId);
+        }
     }
 
     public synchronized List<String> lines() {

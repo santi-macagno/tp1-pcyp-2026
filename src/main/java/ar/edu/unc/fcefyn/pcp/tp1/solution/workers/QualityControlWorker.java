@@ -27,6 +27,7 @@ public class QualityControlWorker extends StageWorker {
         OrderState result = OutcomeDecider.isQualityApproved(order.getId(), config)
                 ? OrderState.APPROVED
                 : OrderState.DEFECTIVE;
+        order.transition(OrderState.PRINTED, result);
         log.changed(order, Stage.QUALITY_CONTROL, OrderState.PRINTED, result);
     }
 }
